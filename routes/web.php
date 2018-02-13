@@ -187,6 +187,18 @@ Route::group(['middleware' => ['forcedomain']], function () {
     });
 
     /*
+     * Routes related to boards.
+     */
+
+    Route::group(['prefix' => 'boards', 'as' => 'board::'], function() {
+        Route::get('/list', ['as' => 'view', 'uses'=> 'BoardsController@index']);
+        Route::get('{id}', ['as' => 'show', 'uses' => 'BoardsController@show']);
+        //Route::get('/photo/{id}', ['as' => 'view', 'uses' => 'PhotoController@photo']);
+
+    });
+
+
+    /*
      * Routes related to committees.
      */
     Route::group(['prefix' => 'committee', 'as' => 'committee::'], function () {
