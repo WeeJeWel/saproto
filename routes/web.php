@@ -149,7 +149,7 @@ Route::group(['middleware' => ['forcedomain']], function () {
         /*
          * Routes related to profile pictures
          */
-        Route::group(['prefix' => '{id}/profilepic', 'as' => 'pic::'], function () {
+        Route::group(['prefix' => 'profilepic', 'as' => 'pic::'], function () {
             Route::post('update', ['as' => 'update', 'uses' => 'ProfilePictureController@update']);
             Route::get('delete', ['as' => 'delete', 'uses' => 'ProfilePictureController@destroy']);
         });
@@ -185,22 +185,19 @@ Route::group(['middleware' => ['forcedomain']], function () {
     Route::group(['prefix' => 'image', 'as' => 'image::'], function () {
         Route::get('{id}/{hash}/{name}', ['as' => 'get', 'uses' => 'FileController@getImage']);
     });
-
-    /*
-     * Routes related to boards.
+   /*
+    * Routes related to boards.
      */
 
     Route::group(['prefix' => 'boards', 'as' => 'board::'], function() {
         Route::get('/list', ['as' => 'view', 'uses'=> 'BoardsController@index']);
-        Route::get('{id}', ['as' => 'show', 'uses' => 'BoardsController@show']);
-        //Route::get('/photo/{id}', ['as' => 'view', 'uses' => 'PhotoController@photo']);
+        Route::get('{id}', ['as' => 'show', 'uses'=> 'BoardsController@show']);
 
     });
-
-
     /*
      * Routes related to committees.
      */
+
     Route::group(['prefix' => 'committee', 'as' => 'committee::'], function () {
 
         Route::group(['prefix' => 'membership', 'as' => 'membership::', 'middleware' => ['auth', 'permission:board']], function () {
@@ -317,6 +314,7 @@ Route::group(['middleware' => ['forcedomain']], function () {
         Route::get('delete/{id}', ['as' => 'delete', 'middleware' => ['permission:board'], 'uses' => 'EventController@destroy']);
 
         Route::post('set_reminder', ['as' => 'set_reminder', 'middleware' => ['auth'], 'uses' => 'EventController@setReminder']);
+        Route::get('toggle_relevant_only', ['as' => 'toggle_relevant_only', 'middleware' => ['auth'], 'uses' => 'EventController@toggleRelevantOnly']);
 
         Route::post('album/{event}/link', ['as' => 'linkalbum', 'middleware' => ['permission:board'], 'uses' => 'EventController@linkAlbum']);
         Route::get('album/unlink/{album}', ['as' => 'unlinkalbum', 'middleware' => ['permission:board'], 'uses' => 'EventController@unlinkAlbum']);
@@ -611,7 +609,11 @@ Route::group(['middleware' => ['forcedomain']], function () {
         Route::group(['prefix' => '{id}', 'as' => 'album::'], function () {
             Route::get('', ['as' => 'list', 'uses' => 'PhotoController@show']);
         });
+        Route::get('/like/{id}', ['as' => 'likes', 'middleware' => ['auth'], 'uses' => 'PhotoController@likePhoto']);
+        Route::get('/dislike/{id}', ['as' => 'dislikes', 'middleware' => ['auth'], 'uses' => 'PhotoController@dislikePhoto']);
+        Route::get('/photo/{id}', ['as' => 'view', 'uses' => 'PhotoController@photo']);
     });
+
     Route::group(['prefix' => 'flickr', 'as' => 'flickr::'], function () {
         Route::get('oauth', ['as' => 'oauth', 'middleware' => ['auth', 'permission:board'], 'uses' => 'FlickrController@oauthTool']);
     });
@@ -675,6 +677,7 @@ Route::group(['middleware' => ['forcedomain']], function () {
         Route::get('togglehistory', ['as' => 'togglehistory', 'middleware' => ['auth'], 'uses' => 'ProtubeController@toggleHistory']);
         Route::get('clearhistory', ['as' => 'clearhistory', 'middleware' => ['auth'], 'uses' => 'ProtubeController@clearHistory']);
         Route::get('top', ['as' => 'top', 'uses' => 'ProtubeController@topVideos']);
+        Route::get('login', ['as' => 'login', 'middleware' => ['auth'], 'uses' => 'ProtubeController@loginRedirect']);
         Route::get('{id?}', ['as' => 'remote', 'uses' => 'ProtubeController@remote']);
 
         Route::group(['prefix' => 'radio', 'middleware' => ['permission:admin'], 'as' => 'radio::'], function () {
