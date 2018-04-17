@@ -38,12 +38,7 @@
                         @endif
 
 
-                            <a href="{{ route("committee::anonymousmail", ["id" => $committee->getPublicId()]) }}"
-                               class="btn btn-info">
-                                Send this committee an anonymous e-mail
-                            </a>
-
-                        @endif
+                        
 
 
                     </div>

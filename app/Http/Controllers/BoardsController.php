@@ -9,6 +9,7 @@ use Proto\Http\Controllers\Controller;
 use Proto\Models\Flickr;
 use Proto\Models\PhotoLikes;
 use Proto\Models\Board;
+use Proto\Models\Committee;
 use Auth;
 
 use Proto\Models\FlickrAlbum;
@@ -25,8 +26,11 @@ class BoardsController extends Controller {
 
     public function show($id)
     {
-
-        return view('boards.show', ['data' => Board::where('id', $id)->first()]);
+        $board = Board::where('id', $id)->first();
+        $committee = Committee::where('id',24)->first();
+        $members = $committee->allmembers();
+        $memberships = $members['editions'][$board->edition];
+        return view('boards.show', ['data' => $board,'memberships'=> $memberships]);
     }
 
 

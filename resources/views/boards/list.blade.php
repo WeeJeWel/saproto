@@ -11,8 +11,8 @@
 
         <a href="{{ route('board::show', ['id' => $board->id]) }}" class="committee-link">
             <div class="committee"
-                 {{--style="{{ ($board->image ? "background-image: url(".$board->image->generateImagePath(450, 300).");" : '') }}"--}}
-                style = "background-image:url('http://www.takepart.com/sites/default/files/styles/large/public/wombat-MAIN.jpg');"
+                 style="{{ ($board->image ? "background-image: url(".$board->image->generateImagePath(450, 300).");" : '') }}"
+                {{--style = "background-image:url('http://www.takepart.com/sites/default/files/styles/large/public/wombat-MAIN.jpg');"--}}
             >
                 <div class="committee-name">
                     {{ $board->edition }}
