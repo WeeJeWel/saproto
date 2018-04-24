@@ -36,6 +36,8 @@
             width: 100%;
             height: 200px;
 
+            transition: all .1s;
+            
             background-color: #666;
             background: linear-gradient(to bottom right, #333, #666);
             background-size: cover;
@@ -46,6 +48,7 @@
 
         .committee:hover {
             transform: scale(1.05,1.05);
+
         }
         .committee-name {
             position: absolute;
@@ -58,6 +61,7 @@
 
         .committee-link:hover {
             text-decoration: none;
+
 
         }
 
